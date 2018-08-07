@@ -11,7 +11,8 @@ import android.graphics.drawable.Drawable
 import android.text.Html.ImageGetter
 import java.net.URL
 import lyh.util.ReadScrollview
-
+import lyh.util.database
+import org.jetbrains.anko.db.*
 
 class ReadActivity : AppCompatActivity() {
     private lateinit var imageGetter: ImageGetter
@@ -19,19 +20,22 @@ class ReadActivity : AppCompatActivity() {
     var nextChapter: String? = null
     var oldChapter = ""
     var directory = ""
+    var thisLink = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_read)
         initView()
-        initData(intent.getStringExtra("link"))
+        initData(thisLink)
     }
 
     fun initView() {
+        thisLink = intent.getStringExtra("link")
         scrollView.setOnScrollViewToBottomLiatener(object : ReadScrollview.OnScrollViewToBottomLiatener {
             override fun onScrollViewToBottomListener() {
                 if ((nextChapter != oldChapter) && (nextChapter != directory)) {
                     initData(nextChapter!!)
+                    thisLink = nextChapter!!
                     oldChapter = nextChapter!!
                 }
             }
@@ -71,6 +75,24 @@ class ReadActivity : AppCompatActivity() {
                 name.text = doc.getElementsByClass("book_title").text()
                 text_tv.text = Html.fromHtml(textBody.toString(), imageGetter, null)
             }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        database.use {
+            var bName = intent.getStringExtra("name")
+            select("collectBook").whereSimple("name=?", bName).exec {
+                if (count == 0)
+                    insert("collectBook",
+                            "name" to bName,
+                            "img" to intent.getStringExtra("img"),
+                            "link" to thisLink,
+                            "time" to System.currentTimeMillis().toString())
+                else
+                    update("collectBook", "link" to thisLink, "time" to System.currentTimeMillis().toString()).whereSimple("name=?", bName).exec()
+            }
+
         }
     }
 }

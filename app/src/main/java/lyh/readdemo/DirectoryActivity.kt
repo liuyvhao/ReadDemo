@@ -25,6 +25,7 @@ class DirectoryActivity : AppCompatActivity() {
         chapters = BookInfoActivity.chapters
         chapters_tv.text = "共" + chapters.size + "章"
         list_item.adapter = ChaptersAdapter(this, chapters)
-        list_item.setOnItemClickListener { _, _, position, _ -> startActivity<ReadActivity>("link" to chapters[position].link) }
+        list_item.setOnItemClickListener { _, _, position, _ ->
+            startActivity<ReadActivity>("link" to chapters[position].link,"name" to intent.getStringExtra("name"),"img" to intent.getStringExtra("img")) }
     }
 }
