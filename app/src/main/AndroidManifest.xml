@@ -28,7 +28,7 @@
             android:windowSoftInputMode="stateHidden|stateAlwaysHidden"/>
         <activity android:name=".DirectoryActivity" />
         <activity android:name=".ReadActivity"
-            android:theme="@style/FullTheme"></activity>
+            android:theme="@style/ReadTheme"></activity>
     </application>
 
 </manifest>

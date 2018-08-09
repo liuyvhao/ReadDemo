@@ -9,10 +9,15 @@ import org.jetbrains.anko.uiThread
 import org.jsoup.Jsoup
 import android.graphics.drawable.Drawable
 import android.text.Html.ImageGetter
+import android.view.Gravity
+import android.view.WindowManager
+import android.widget.PopupWindow
+import kotlinx.android.synthetic.main.read_title.view.*
 import java.net.URL
 import lyh.util.ReadScrollview
 import lyh.util.database
 import org.jetbrains.anko.db.*
+
 
 class ReadActivity : AppCompatActivity() {
     private lateinit var imageGetter: ImageGetter
@@ -21,6 +26,9 @@ class ReadActivity : AppCompatActivity() {
     var oldChapter = ""
     var directory = ""
     var thisLink = ""
+    private lateinit var popTitle: PopupWindow
+    private lateinit var popMenu: PopupWindow
+    private var isShow = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +49,30 @@ class ReadActivity : AppCompatActivity() {
             }
 
         })
+
+        var popTitleView = layoutInflater.inflate(R.layout.read_title, null, false)
+        var popMenuView = layoutInflater.inflate(R.layout.read_menu, null, false)
+        popTitle = PopupWindow(popTitleView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, false)
+        popTitle.animationStyle = R.style.popTitleAnim
+        popMenu = PopupWindow(popMenuView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT, false)
+        popMenu.animationStyle = R.style.popMenuAnim
+        popTitleView.back.setOnClickListener { finish() }
+        text_tv.setOnClickListener {
+            if (isShow) {
+                popTitle.dismiss()
+                popMenu.dismiss()
+                full(true)
+            } else {
+                popTitle.showAtLocation(it, Gravity.TOP, 0, 0)
+                popTitle.update()
+
+                popMenu.showAtLocation(it, Gravity.BOTTOM, 0, 0)
+                popMenu.update()
+                full(false)
+            }
+            isShow = !isShow
+        }
+
         imageGetter = ImageGetter { source ->
             var drawable: Drawable? = null
             val url: URL
@@ -56,6 +88,21 @@ class ReadActivity : AppCompatActivity() {
             drawable
         }
 
+    }
+
+    private fun full(enable: Boolean) {
+        if (enable) {
+            val lp = window.attributes
+            lp.flags = lp.flags or WindowManager.LayoutParams.FLAG_FULLSCREEN
+            window.attributes = lp
+            window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        } else {
+            val attr = window.attributes
+            attr.flags = attr.flags and WindowManager.LayoutParams.FLAG_FULLSCREEN
+            window.attributes = attr
+            window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        }
     }
 
     fun initData(link: String) {

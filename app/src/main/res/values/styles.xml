@@ -15,12 +15,25 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
+
     <style name="LoadingLayoutStyle" parent="LoadingLayout.Style">
         <!--<item name="llEmptyImage">@drawable/ic_empty</item>-->
         <!--<item name="llErrorImage">@drawable/ic_error</item>-->
         <item name="llLoadingResId">@layout/common_loading</item>
     </style>
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="popTitleAnim" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/pop_down</item>
+        <item name="android:windowExitAnimation">@anim/pop_up</item>
+    </style>
+
+    <style name="popMenuAnim" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/pop_up</item>
+        <item name="android:windowExitAnimation">@anim/pop_down</item>
+    </style>
+
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

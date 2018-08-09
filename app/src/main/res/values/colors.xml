@@ -7,10 +7,15 @@
     <color name="dLine">#dcdcdc</color>
     <color name="line">#8a8a8a</color>
     <color name="LightGrey">#D3D3D3</color>
+    <color name="DimGray">#696969</color>
     <color name="red">#ff5151</color>
     <color name="viewBg">#f5f4f9</color>
     <color name="SlateGray">#708090</color>
     <color name="bLine">#515151</color>
     <color name="directory">#F5F5F5</color>
-    <color name="eye">#C7EDCC</color>
+    <color name="eye_green">#C7EDCC</color>
+    <color name="eye_white">#FFF2E2</color>
+    <color name="eye_red">#FDE6E0</color>
+    <color name="eye_blue">#DCE2F1</color>
+    <color name="eye_grey">#EAEAEF</color>
 </resources>
