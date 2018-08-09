@@ -58,6 +58,7 @@ class AllFragment : Fragment(), OnItemClickLitener {
                 Head.analysisSearch(doc, bookLists)
                 adapter?.notifyDataSetChanged()
                 v!!.swipeRefresh.isRefreshing = false
+                SearchActivity.instance?.showTab()
             }
         }
     }

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/viewBg"
     android:orientation="vertical"
     tools:context=".BookActivity">
 
@@ -35,6 +36,49 @@
                 android:textColor="@android:color/black"
                 android:textSize="17sp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/all"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/ripple_bg_w"
+                android:gravity="center"
+                android:text="全选"
+                android:textColor="@android:color/black"
+                android:textSize="15sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/del"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="60dp"
+                android:background="@drawable/ripple_bg_w"
+                android:clickable="false"
+                android:gravity="center"
+                android:text="删除"
+                android:textColor="@color/line"
+                android:textSize="15sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/cancel"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="110dp"
+                android:background="@drawable/ripple_bg_w"
+                android:gravity="center"
+                android:text="完成"
+                android:textColor="@android:color/black"
+                android:textSize="15sp"
+                android:visibility="gone" />
         </RelativeLayout>
     </LinearLayout>
 

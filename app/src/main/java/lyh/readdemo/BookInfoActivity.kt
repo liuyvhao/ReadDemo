@@ -12,6 +12,7 @@ import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.textColor
 import org.jetbrains.anko.uiThread
 import org.jsoup.Jsoup
 
@@ -50,6 +51,8 @@ class BookInfoActivity : AppCompatActivity(), View.OnClickListener {
                         "img" to bImg,
                         "link" to startLink,
                         "time" to System.currentTimeMillis().toString())
+                collect.isClickable = false
+                collect.setBackgroundColor(resources.getColor(R.color.LightGrey))
             }
         }
         read.setOnClickListener { startActivity<DirectoryActivity>("name" to bName, "img" to bImg) }
@@ -80,6 +83,7 @@ class BookInfoActivity : AppCompatActivity(), View.OnClickListener {
                     select("collectBook").whereSimple("name=?", bName).exec {
                         if (count != 0) {
                             collect.isClickable = false
+                            collect.setBackgroundColor(resources.getColor(R.color.LightGrey))
                         }
                     }
                 }

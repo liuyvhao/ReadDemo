@@ -3,6 +3,8 @@
     package="lyh.readdemo">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 允许程序设置内置sd卡的写权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name="lyh.MyApplication"
@@ -15,7 +17,6 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -23,7 +24,8 @@
         <activity android:name=".BookShelfActivity" />
         <activity android:name=".BookHotActivity" />
         <activity android:name=".BookInfoActivity" />
-        <activity android:name=".SearchActivity" />
+        <activity android:name=".SearchActivity"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"/>
         <activity android:name=".DirectoryActivity" />
         <activity android:name=".ReadActivity"
             android:theme="@style/FullTheme"></activity>

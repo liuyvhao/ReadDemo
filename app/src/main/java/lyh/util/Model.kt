@@ -4,4 +4,4 @@ data class BookList(var link: String, var img: String, var title: String, var au
 
 data class Chapter(var title: String, var link: String)
 
-data class Collect(var name: String, var img: String, var link: String, var time: String)
+data class Collect(var name: String, var img: String, var link: String, var time: String, var check: Boolean = false)

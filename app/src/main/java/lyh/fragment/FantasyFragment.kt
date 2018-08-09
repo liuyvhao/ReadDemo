@@ -15,7 +15,7 @@ import lyh.util.Head
 import lyh.util.OnItemClickLitener
 import lyh.util.SpaceItemDecoration
 import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.support.v4.startActivity
+import org.jetbrains.anko.support.v4.startActivityForResult
 import org.jetbrains.anko.uiThread
 import org.jsoup.Jsoup
 
@@ -47,7 +47,7 @@ class FantasyFragment : Fragment(), OnItemClickLitener {
     }
 
     override fun onItemClick(view: View, position: Int) {
-        startActivity<BookInfoActivity>("link" to Head.urlHead +bookLists[position].link)
+        startActivityForResult<BookInfoActivity>(1,"link" to Head.urlHead +bookLists[position].link)
     }
 
 

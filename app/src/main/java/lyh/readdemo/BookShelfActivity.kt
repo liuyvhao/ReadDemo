@@ -1,5 +1,6 @@
 package lyh.readdemo
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.TabLayout
@@ -8,6 +9,7 @@ import kotlinx.android.synthetic.main.activity_book_shelf.*
 import lyh.adapter.TablayoutAdapter
 import lyh.fragment.*
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.startActivityForResult
 import java.util.ArrayList
 
 /**
@@ -24,7 +26,7 @@ class BookShelfActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
     }
 
     private fun initView() {
-        search.setOnClickListener { startActivity<SearchActivity>() }
+        search.setOnClickListener { startActivityForResult<SearchActivity>(1) }
         for (item in titles)
             tabLayout.addTab(tabLayout.newTab().setText(item))
         tabLayout.setOnTabSelectedListener(this)
@@ -44,5 +46,10 @@ class BookShelfActivity : AppCompatActivity(), TabLayout.OnTabSelectedListener {
 
     override fun onTabSelected(tab: TabLayout.Tab?) {
         if (tab != null) view_pager.currentItem = tab.position
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        BookActivity.instance?.resData()
     }
 }

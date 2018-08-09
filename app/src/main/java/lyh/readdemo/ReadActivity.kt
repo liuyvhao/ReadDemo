@@ -78,8 +78,8 @@ class ReadActivity : AppCompatActivity() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onPause() {
+        super.onPause()
         database.use {
             var bName = intent.getStringExtra("name")
             select("collectBook").whereSimple("name=?", bName).exec {
@@ -92,7 +92,6 @@ class ReadActivity : AppCompatActivity() {
                 else
                     update("collectBook", "link" to thisLink, "time" to System.currentTimeMillis().toString()).whereSimple("name=?", bName).exec()
             }
-
         }
     }
 }

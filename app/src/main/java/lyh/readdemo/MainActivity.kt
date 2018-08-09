@@ -9,7 +9,7 @@ import android.widget.TabHost
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
 
-class MainActivity : TabActivity(),RadioGroup.OnCheckedChangeListener {
+class MainActivity : TabActivity(), RadioGroup.OnCheckedChangeListener {
     lateinit var mTabHost: TabHost
     //点击关闭的初始时间
     private var exitTime: Long = 0

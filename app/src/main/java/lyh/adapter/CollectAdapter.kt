@@ -16,8 +16,13 @@ class CollectAdapter(var mOnItemClickLitener: OnItemClickLitener, var collectLis
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemView.img.setImageURI(collectList[position].img)
         holder.itemView.name.text = collectList[position].name
+        holder.itemView.cb.isChecked = collectList[position].check
         holder.itemView.setOnClickListener {
             mOnItemClickLitener.onItemClick(holder.itemView, holder.layoutPosition)
+        }
+        holder.itemView.setOnLongClickListener {
+            mOnItemClickLitener.onItemLongClick(holder.itemView, holder.layoutPosition)
+            return@setOnLongClickListener true
         }
     }
 
