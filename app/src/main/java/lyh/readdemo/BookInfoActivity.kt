@@ -1,5 +1,6 @@
 package lyh.readdemo
 
+import android.content.Intent
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -8,12 +9,9 @@ import android.view.WindowManager
 import kotlinx.android.synthetic.main.activity_book_info.*
 import lyh.util.Chapter
 import lyh.util.database
+import org.jetbrains.anko.*
 import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.startActivity
-import org.jetbrains.anko.textColor
-import org.jetbrains.anko.uiThread
 import org.jsoup.Jsoup
 
 /**
@@ -24,9 +22,9 @@ class BookInfoActivity : AppCompatActivity(), View.OnClickListener {
         var chapters = ArrayList<Chapter>()
     }
 
-    lateinit var bName: String
-    lateinit var bImg: String
-    lateinit var startLink: String
+    private lateinit var bName: String
+    private lateinit var bImg: String
+    private lateinit var startLink: String
     private lateinit var newLink: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +40,7 @@ class BookInfoActivity : AppCompatActivity(), View.OnClickListener {
 
     fun initView() {
         back.setOnClickListener(this)
-        directory.setOnClickListener { startActivity<ReadActivity>("link" to newLink, "name" to bName, "img" to bImg) }
+        directory.setOnClickListener { startActivityForResult<ReadActivity>(1,"link" to newLink, "name" to bName, "img" to bImg) }
         chapters.clear()
         collect.setOnClickListener {
             database.use {
@@ -55,7 +53,7 @@ class BookInfoActivity : AppCompatActivity(), View.OnClickListener {
                 collect.setBackgroundColor(resources.getColor(R.color.LightGrey))
             }
         }
-        read.setOnClickListener { startActivity<DirectoryActivity>("name" to bName, "img" to bImg) }
+        read.setOnClickListener { startActivityForResult<DirectoryActivity>(1,"name" to bName, "img" to bImg) }
     }
 
     private fun initData() {
@@ -97,4 +95,15 @@ class BookInfoActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        database.use {
+            select("collectBook").whereSimple("name=?", bName).exec {
+                if (count != 0) {
+                    collect.isClickable = false
+                    collect.setBackgroundColor(resources.getColor(R.color.LightGrey))
+                }
+            }
+        }
+    }
 }
