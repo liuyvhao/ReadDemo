@@ -5,3 +5,5 @@ data class BookList(var link: String, var img: String, var title: String, var au
 data class Chapter(var title: String, var link: String,var check: Boolean = false)
 
 data class Collect(var name: String, var img: String, var link: String, var time: String, var check: Boolean = false)
+
+data class sName(var name: String,var time: String)

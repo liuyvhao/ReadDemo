@@ -20,10 +20,13 @@ class BookSqlHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "xBook.db") {
                 "img" to TEXT,
                 "link" to TEXT,
                 "time" to TEXT)
+        db.createTable("searchName", true,
+                "name" to TEXT,
+                "time" to TEXT)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        db.dropTable("xBook.db",true)
+        db.dropTable("xBook.db", true)
     }
 
 }

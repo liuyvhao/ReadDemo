@@ -77,7 +77,7 @@
                 android:drawableTop="@drawable/radiobutton_bookhot"
                 android:gravity="center"
                 android:paddingTop="5dp"
-                android:text="热门"
+                android:text="精选"
                 android:textColor="@color/radio_txt_selector"
                 android:textSize="10sp" />
         </RadioGroup>

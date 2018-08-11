@@ -28,6 +28,7 @@ class AllFragment : Fragment(), OnItemClickLitener {
     private var v: View? = null
     private var bookLists = ArrayList<BookList>()
     private var adapter: SearchListAdapter? = null
+    var nextLink: String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         v = inflater.inflate(R.layout.fragment_all, container, false)
@@ -55,9 +56,10 @@ class AllFragment : Fragment(), OnItemClickLitener {
         doAsync {
             var doc = Jsoup.connect("http://zhannei.baidu.com/cse/search?s=11488190379777616912&entry=1&ie=utf-8&q=" + SearchActivity.bookName).get()
             uiThread {
+                nextLink=doc.getElementsByClass("pager clearfix").text()
                 Head.analysisSearch(doc, bookLists)
                 adapter?.notifyDataSetChanged()
-                v!!.swipeRefresh.isRefreshing = false
+                v!!.swipeRefresh.isRefreshing=false
                 SearchActivity.instance?.showTab()
             }
         }

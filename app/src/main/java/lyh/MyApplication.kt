@@ -13,4 +13,5 @@ class MyApplication : Application() {
         instance = this
         Fresco.initialize(this)
     }
+
 }

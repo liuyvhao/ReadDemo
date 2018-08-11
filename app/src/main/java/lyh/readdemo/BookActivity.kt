@@ -5,8 +5,6 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.GridLayoutManager
-import android.view.KeyEvent
-import android.view.MotionEvent
 import android.view.View
 import kotlinx.android.synthetic.main.activity_book.*
 import kotlinx.android.synthetic.main.item_collect.view.*
@@ -16,7 +14,6 @@ import lyh.util.OnItemClickLitener
 import lyh.util.database
 import org.jetbrains.anko.db.MapRowParser
 import org.jetbrains.anko.db.SqlOrderDirection
-import org.jetbrains.anko.db.delete
 import org.jetbrains.anko.db.select
 import org.jetbrains.anko.startActivityForResult
 

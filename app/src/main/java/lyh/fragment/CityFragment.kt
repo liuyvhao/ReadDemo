@@ -6,6 +6,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.scwang.smartrefresh.layout.constant.SpinnerStyle
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter
+import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import kotlinx.android.synthetic.main.fragment_city.view.*
 import lyh.adapter.BookListAdapter
 import lyh.readdemo.BookInfoActivity
@@ -26,11 +29,13 @@ class CityFragment : Fragment(), OnItemClickLitener {
     private var v: View? = null
     private var bookLists = ArrayList<BookList>()
     private var adapter: BookListAdapter? = null
+    var thisLink = Head.urlHead + "/modules/article/articlelist.php?class=3"
+    var nextLink: String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         v = inflater.inflate(R.layout.fragment_city, container, false)
         initView()
-        initData()
+        initData(thisLink)
         return v
     }
 
@@ -39,10 +44,14 @@ class CityFragment : Fragment(), OnItemClickLitener {
         v!!.recyclerView.layoutManager = LinearLayoutManager(v!!.context)
         v!!.recyclerView.addItemDecoration(SpaceItemDecoration(10))
         v!!.recyclerView.adapter = adapter
-        v!!.swipeRefresh.setColorScheme(R.color.colorAccent)
+        v!!.swipeRefresh.refreshHeader = ClassicsHeader(v!!.context).setSpinnerStyle(SpinnerStyle.Translate).setEnableLastTime(false)
+        v!!.swipeRefresh.refreshFooter = ClassicsFooter(v!!.context).setSpinnerStyle(SpinnerStyle.Translate)
         v!!.swipeRefresh.setOnRefreshListener {
             bookLists.clear()
-            initData()
+            initData(thisLink)
+        }
+        v!!.swipeRefresh.setOnLoadmoreListener {
+            initData(nextLink!!)
         }
     }
 
@@ -50,14 +59,18 @@ class CityFragment : Fragment(), OnItemClickLitener {
         startActivityForResult<BookInfoActivity>(1,"link" to Head.urlHead +bookLists[position].link)
     }
 
-    private fun initData() {
-        v!!.swipeRefresh.isRefreshing = true
+    private fun initData(link: String) {
         doAsync {
-            var doc = Jsoup.connect(Head.urlHead + "/modules/article/articlelist.php?class=3").get()
+            var doc = Jsoup.connect(link).get()
             uiThread {
+                v!!.loadingLayout.showContent()
+                nextLink = doc.getElementsByClass("next").attr("abs:href")
                 Head.analysis(doc, bookLists)
                 adapter?.notifyDataSetChanged()
-                v!!.swipeRefresh.isRefreshing = false
+                if (v!!.swipeRefresh.isRefreshing)
+                    v!!.swipeRefresh.finishRefresh(0)
+                if (v!!.swipeRefresh.isLoading)
+                    v!!.swipeRefresh.finishLoadmore(0)
             }
         }
     }

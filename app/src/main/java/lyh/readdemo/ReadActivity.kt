@@ -72,11 +72,13 @@ class ReadActivity : AppCompatActivity() {
         popMenu.animationStyle = R.style.popMenuAnim
         popTitleView.back.setOnClickListener { finish() }
         popMenuView.directory.setOnClickListener {
-            popTitle.dismiss()
-            popMenu.dismiss()
-            full(true)
-            DirectoryDialog(this, bName, chapters, bColor!!, name.text.toString()).show()
-            isShow = !isShow
+            if (!isFirst){
+                popTitle.dismiss()
+                popMenu.dismiss()
+                full(true)
+                DirectoryDialog(this, bName, chapters, bColor!!, name.text.toString()).show()
+                isShow = !isShow
+            }
         }
         popMenuView.up_chapter.setOnClickListener {
             if (upChapter != directory) {
@@ -245,7 +247,6 @@ class ReadActivity : AppCompatActivity() {
                 text_tv.text = Html.fromHtml(textBody.toString(), imageGetter, null)
                 if (isFirst) {
                     initDirectory(directory)
-                    isFirst = false
                 }
             }
         }
@@ -262,6 +263,7 @@ class ReadActivity : AppCompatActivity() {
                     var link = element.attr("abs:href")
                     chapters.add(Chapter(title, link))
                 }
+                isFirst = false
             }
         }
     }
