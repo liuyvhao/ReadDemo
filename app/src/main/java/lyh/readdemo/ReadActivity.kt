@@ -50,7 +50,7 @@ class ReadActivity : AppCompatActivity() {
     }
 
     fun initView() {
-        full(true)
+//        full(true)
         thisLink = intent.getStringExtra("link")
         scrollView.setOnScrollViewToBottomLiatener(object : ReadScrollview.OnScrollViewToBottomLiatener {
             override fun onScrollViewToBottomListener() {
@@ -75,7 +75,7 @@ class ReadActivity : AppCompatActivity() {
             if (!isFirst){
                 popTitle.dismiss()
                 popMenu.dismiss()
-                full(true)
+//                full(true)
                 DirectoryDialog(this, bName, chapters, bColor!!, name.text.toString()).show()
                 isShow = !isShow
             }
@@ -163,14 +163,14 @@ class ReadActivity : AppCompatActivity() {
             if (isShow) {
                 popTitle.dismiss()
                 popMenu.dismiss()
-                full(true)
+//                full(true)
             } else {
                 popTitle.showAtLocation(it, Gravity.TOP, 0, 64)
                 popTitle.update()
 
                 popMenu.showAtLocation(it, Gravity.BOTTOM, 0, 0)
                 popMenu.update()
-                full(false)
+//                full(false)
             }
             isShow = !isShow
         }
@@ -178,14 +178,14 @@ class ReadActivity : AppCompatActivity() {
             if (isShow) {
                 popTitle.dismiss()
                 popMenu.dismiss()
-                full(true)
+//                full(true)
             } else {
                 popTitle.showAtLocation(it, Gravity.TOP, 0, 64)
                 popTitle.update()
 
                 popMenu.showAtLocation(it, Gravity.BOTTOM, 0, 0)
                 popMenu.update()
-                full(false)
+//                full(false)
             }
             isShow = !isShow
         }
