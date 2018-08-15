@@ -6,6 +6,8 @@ import android.text.Html
 import kotlinx.android.synthetic.main.activity_read.*
 import org.jsoup.Jsoup
 import android.graphics.drawable.Drawable
+import android.os.AsyncTask
+import android.os.Message
 import android.text.Html.ImageGetter
 import android.view.Gravity
 import android.view.WindowManager
@@ -25,7 +27,6 @@ class ReadActivity : AppCompatActivity() {
         var instance: ReadActivity? = null
     }
 
-    private lateinit var imageGetter: ImageGetter
     private var textBody: StringBuffer = StringBuffer()
     private var upChapter: String? = null
     var nextChapter: String? = null
@@ -72,7 +73,7 @@ class ReadActivity : AppCompatActivity() {
         popMenu.animationStyle = R.style.popMenuAnim
         popTitleView.back.setOnClickListener { finish() }
         popMenuView.directory.setOnClickListener {
-            if (!isFirst){
+            if (!isFirst) {
                 popTitle.dismiss()
                 popMenu.dismiss()
 //                full(true)
@@ -189,21 +190,6 @@ class ReadActivity : AppCompatActivity() {
             }
             isShow = !isShow
         }
-
-        imageGetter = ImageGetter { source ->
-            var drawable: Drawable? = null
-            val url: URL
-            try {
-                url = URL(source)
-                drawable = Drawable.createFromStream(url.openStream(), "")  //获取网路图片
-            } catch (e: Exception) {
-                return@ImageGetter null
-            }
-
-            drawable!!.setBounds(0, 0, drawable.intrinsicWidth, drawable
-                    .intrinsicHeight)
-            drawable
-        }
     }
 
     private fun full(enable: Boolean) {
@@ -244,7 +230,7 @@ class ReadActivity : AppCompatActivity() {
                 upChapter = doc.getElementsByClass("page")[0].select("a").first().attr("abs:href")
                 nextChapter = doc.getElementsByClass("page")[0].select("a").last().attr("abs:href")
                 name.text = doc.getElementsByClass("book_title").text()
-                text_tv.text = Html.fromHtml(textBody.toString(), imageGetter, null)
+                ImageTextUtil.setImageText(text_tv,textBody.toString())
                 if (isFirst) {
                     initDirectory(directory)
                 }
